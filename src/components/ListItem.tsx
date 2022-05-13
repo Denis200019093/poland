@@ -13,15 +13,24 @@ interface IProps {
 
 const ATTEMPTS_LIMIT = 3;
 
+interface IState {
+    attempts: string[];
+    step: number;
+}
+
+interface IAction {
+    status: string;
+}
+
 const init = () => ({
     attempts: Array.from({ length: ATTEMPTS_LIMIT }).map((_) => "idle"),
     step: 0
 });
 
-function attemptsReducer(state: any, action: any) {
+function attemptsReducer(state: IState, action: IAction) {
     const { status } = action;
     
-    const currentIndex = state.attempts.findIndex((a: string | number) => a === "idle");
+    const currentIndex = state.attempts.findIndex((item: string) => item === "idle");
     const newAttempts = state.attempts;
 
     newAttempts[currentIndex] = status;
@@ -74,7 +83,7 @@ const ListItem: FC<IProps> = ({item}) => {
         }
     };
 
-    const change = (e: any) => {
+    const change = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value)
         debounced(e.target.value)
     }

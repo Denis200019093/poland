@@ -20,14 +20,23 @@ const initialValues = {
     second: ''
 };
 
+
+interface ITarget {
+    name: string
+    value: HTMLInputElement | string
+}
+interface IInput {
+    target: ITarget
+}
+
 const List: FC = () => {
 
     const [ list, setList ] = useState<IItem[]>([])
     const [ values, setValues ] = useState(initialValues);
     const { first, answer, second } = values
 
-    const handleInputChange = (e: any) => {
-        const { name, value } = e.target;
+    const handleInputChange = (event: IInput) => {
+        const { name, value } = event.target;
 
         setValues({
             ...values,
